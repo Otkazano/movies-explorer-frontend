@@ -1,0 +1,40 @@
+.navTab {
+  margin: 24px auto;
+  padding: 0;
+}
+
+.navTab__links {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  max-width: 276px;
+  margin: 0 auto;
+  padding: 0;
+}
+.navTab__links-el {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.navTab__link::after {
+  content: ' ';
+  background: black;
+  width: 107%;
+  height: 1px;
+  top: 17px;
+  left: -2px;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
+
+.navTab__link {
+  text-decoration: none;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
+}
