@@ -1,9 +1,0 @@
-{
-  "ecsstractor_port.attributes": "className",
-  "ecsstractor_port.comment_style": "css",
-  "ecsstractor_port.bem_nesting": true,
-  "ecsstractor_port.brackets_newline_after": true,
-  "ecsstractor_port.destination": "clipboard",
-  "ecsstractor_port.empty_line_before_nested_selector": false,
-  "ecsstractor_port.add_comment": true
-}

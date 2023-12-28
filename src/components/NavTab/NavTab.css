@@ -1,5 +1,5 @@
 .navTab {
-  margin: 24px auto;
+  margin: 22px auto 26px;
   padding: 0;
 }
 
@@ -37,4 +37,14 @@
   line-height: 16px;
   margin: 0;
   padding: 0;
+}
+
+@media (max-width: 615px) {
+  .navTab__links {
+    max-width: 215px;
+  }
+
+  .navTab__link {
+    font-size: 11px;
+  }
 }

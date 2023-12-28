@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 0 0 0 29px;
+  margin: 0 0 3px 29px;
 }
 
 .header__buttons-end {
@@ -95,4 +95,28 @@
   line-height: 16px;
   text-decoration: none;
   color: #000;
+}
+
+@media (max-width: 845px) {
+  .header {
+    padding: 10px 30px;
+  }
+}
+
+@media (max-width: 615px) {
+  .header {
+    padding: 10px 14px;
+  }
+
+  .header__button-signIn {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+    padding: 7px 12px;
+    margin: 0 0 0 14px;
+  }
+
+  .header__button-signUp {
+    font-size: 10px;
+  }
 }

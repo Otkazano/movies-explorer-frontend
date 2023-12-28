@@ -20,3 +20,10 @@
   margin: 0;
   padding: 0;
 }
+
+@media (max-width: 615px) {
+  .main__subtitle {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}

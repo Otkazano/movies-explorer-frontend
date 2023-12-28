@@ -72,3 +72,115 @@
   line-height: 17px;
   color: #a0a0a0;
 }
+
+@media (max-width: 1279px) {
+  .aboutProject__textBox {
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-row-gap: 22px;
+    grid-column-gap: 30px;
+  }
+}
+
+@media (max-width: 1075px) {
+  .aboutProject__textBox {
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-row-gap: 22px;
+    grid-column-gap: 30px;
+  }
+}
+
+@media (max-width: 845px) {
+  .aboutProject {
+    padding: 90px 50px;
+  }
+
+  .aboutProject__text-info {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .aboutProject__textBox {
+    grid-template-columns: repeat(auto-fit, minmax(319px, 1fr));
+    grid-row-gap: 22px;
+    grid-column-gap: 30px;
+  }
+
+  .aboutProject__timeBox {
+    grid-template-columns: 21% 79%;
+    grid-row-gap: 14px;
+  }
+
+  .aboutProject__time-weeks {
+    margin: 0;
+  }
+}
+
+@media (max-width: 770px) {
+  .aboutProject__textBox {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-row-gap: 22px;
+    grid-column-gap: 30px;
+  }
+}
+
+@media (max-width: 730px) {
+  .aboutProject__textBox {
+    grid-template-areas:
+      'title-first'
+      'text-first'
+      'title-second'
+      'text-second';
+    gap: 18px;
+  }
+
+  .grid-title-first {
+    grid-area: title-first;
+  }
+
+  .grid-title-second {
+    grid-area: title-second;
+  }
+
+  .grid-text-first {
+    grid-area: text-first;
+    margin-bottom: 40px;
+  }
+
+  .grid-text-second {
+    grid-area: text-second;
+  }
+}
+
+@media (max-width: 615px) {
+  .aboutProject {
+    padding: 70px 18px;
+  }
+
+  .aboutProject__text-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  .aboutProject__text-info {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .aboutProject__textBox {
+    margin: 89px auto 60px;
+  }
+
+  .aboutProject__timeBox {
+    grid-template-columns: 36% 64%;
+    grid-row-gap: 10px;
+  }
+
+  .aboutProject__time-weeks {
+    font-size: 11px;
+  }
+
+  .aboutProject__time-info {
+    font-size: 11px;
+    line-height: normal;
+  }
+}
