@@ -5,7 +5,7 @@ export default function usePopupClose (isOpen, closePopup) {
     if (!isOpen) return
 
     const handleOverlay = event => {
-      if (event.target.classList.contains('popup_opened')) {
+      if (event.target.classList.contains('burgerMenu_opened')) {
         closePopup()
       }
     }

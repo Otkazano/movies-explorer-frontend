@@ -2,7 +2,7 @@ import './NavTab.css'
 
 export default function NavTab () {
   return (
-    <section className='navTab'>
+    <nav className='navTab'>
       <ul className='navTab__links'>
         <li className='navTab__links-el'>
           <a href='#aboutProject' className='navTab__link links-hover-style'>
@@ -20,6 +20,6 @@ export default function NavTab () {
           </a>
         </li>
       </ul>
-    </section>
+    </nav>
   )
 }

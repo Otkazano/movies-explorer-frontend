@@ -46,6 +46,10 @@
   line-height: 18px;
 }
 
+.header__link:active {
+  font-weight: 500;
+}
+
 .header__button-profile {
   color: #000;
   font-family: Inter;
@@ -95,6 +99,14 @@
   line-height: 16px;
   text-decoration: none;
   color: #000;
+}
+
+.header__burgerMenu {
+  background-image: url(../../images/burgerIcon.svg);
+  background-color: transparent;
+  width: 44px;
+  height: 44px;
+  border: none;
 }
 
 @media (max-width: 845px) {

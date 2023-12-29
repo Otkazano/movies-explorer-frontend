@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer'
 export default function Main ({ isLogged }) {
   return (
     <>
-      <Header isLogged={isLogged} mainPage={true} />
+      <Header isLogged={true} mainPage={true} />
       <main className='main'>
         <Promo />
         <NavTab />
