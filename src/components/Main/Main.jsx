@@ -7,11 +7,12 @@ import AboutMe from '../AboutMe/AboutMe'
 import Portfolio from '../Portfolio/Portfolio'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import Preloader from '../Preloader/Preloader'
 
-export default function Main ({ isLogged }) {
+export default function Main ({ isLogged, isLoading }) {
   return (
     <>
-      <Header isLogged={true} mainPage={true} />
+      <Header isLogged={isLogged} mainPage={true} />
       <main className='main'>
         <Promo />
         <NavTab />
@@ -21,6 +22,7 @@ export default function Main ({ isLogged }) {
         <Portfolio />
       </main>
       <Footer />
+      {isLoading && <Preloader />}
     </>
   )
 }

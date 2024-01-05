@@ -34,10 +34,10 @@ export default function Header ({ isLogged, mainPage }) {
         >
           {isLogged && isScreen845 && (
             <div className='header__links-movies'>
-              <Link to={'/'} className='links-hover-style header__link'>
+              <Link to={'/movies'} className='links-hover-style header__link'>
                 Фильмы
               </Link>
-              <Link to={'/'} className='links-hover-style header__link'>
+              <Link to={'/savedmovies'} className='links-hover-style header__link'>
                 Сохранённые фильмы
               </Link>
             </div>

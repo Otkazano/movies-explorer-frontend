@@ -1,6 +1,7 @@
 .navTab {
-  margin: 22px auto 26px;
-  padding: 0;
+  margin: 0;
+  padding: 22px 0 26px;
+  background: #F5F5F5;
 }
 
 .navTab__links {
