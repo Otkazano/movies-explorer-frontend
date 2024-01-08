@@ -1,12 +1,13 @@
 import React from 'react'
 import Navigate from '../Navigate/Navigate'
 import './Header.css'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useResize } from '../../hooks/useResize'
 
 export default function Header ({ isLogged, mainPage }) {
   const [isOpened, setIsOpened] = React.useState(false)
   const { isScreen845 } = useResize()
+  const location = useLocation()
 
   function openBurgerMenu () {
     setIsOpened(true)
@@ -34,10 +35,20 @@ export default function Header ({ isLogged, mainPage }) {
         >
           {isLogged && isScreen845 && (
             <div className='header__links-movies'>
-              <Link to={'/movies'} className='links-hover-style header__link'>
+              <Link
+                to={'/movies'}
+                className={`links-hover-style header__link ${
+                  location.pathname === '/movies' ? 'header__link-active' : ''
+                }`}
+              >
                 Фильмы
               </Link>
-              <Link to={'/savedmovies'} className='links-hover-style header__link'>
+              <Link
+                to={'/savedmovies'}
+                className={`links-hover-style header__link ${
+                  location.pathname === '/savedmovies' ? 'header__link-active' : ''
+                }`}
+              >
                 Сохранённые фильмы
               </Link>
             </div>

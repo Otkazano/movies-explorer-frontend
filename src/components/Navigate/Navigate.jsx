@@ -1,8 +1,11 @@
 import './Navigate.css'
 import usePopupClose from '../../hooks/usePopupClose.js'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+
 export default function BurgerMenu ({ isOpened, onClose }) {
   usePopupClose(isOpened, onClose)
+  const location = useLocation()
+
   return (
     <nav className={isOpened ? 'navigate navigate_opened' : 'navigate'}>
       <div className='navigate__container'>
@@ -14,19 +17,33 @@ export default function BurgerMenu ({ isOpened, onClose }) {
         ></button>
         <ul className='navigate__links'>
           <li className='navigate__links-el'>
-            <Link to={'/'} className='links-hover-style navigate__link'>
+            <Link
+              to={'/'}
+              className={`links-hover-style navigate__link ${
+                location.pathname === '/' ? 'navigate__link-active' : ''
+              }`}
+            >
               Главная
             </Link>
           </li>
           <li className='navigate__links-el'>
-            <Link to={'/movies'} className='links-hover-style navigate__link'>
+            <Link
+              to={'/movies'}
+              className={`links-hover-style navigate__link ${
+                location.pathname === '/movies' ? 'navigate__link-active' : ''
+              }`}
+            >
               Фильмы
             </Link>
           </li>
           <li className='navigate__links-el'>
             <Link
               to={'/savedmovies'}
-              className='links-hover-style navigate__link'
+              className={`links-hover-style navigate__link ${
+                location.pathname === '/savedmovies'
+                  ? 'navigate__link-active'
+                  : ''
+              }`}
             >
               Сохранённые фильмы
             </Link>

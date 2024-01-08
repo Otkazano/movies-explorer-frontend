@@ -5,6 +5,7 @@ import Main from '../Main/Main'
 import CurrentUserContext from '../../contexts/CurrentUserContext.js'
 import Movies from '../Movies/Movies.jsx'
 import SavedMovies from '../SavedMovies/SavedMovies.jsx'
+import NotFound from '../NotFound/NotDound.jsx'
 
 export default function App () {
   const [currentUser, setCurrentUser] = React.useState({})
@@ -27,6 +28,7 @@ export default function App () {
             path='/savedmovies'
             element={<SavedMovies isLogged={isLogged} isLoading={isLoading} />}
           />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </CurrentUserContext.Provider>
     </div>

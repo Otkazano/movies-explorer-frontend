@@ -82,7 +82,7 @@
   position: relative;
 }
 
-.navigate__link:active::after {
+.navigate__link-active::after {
   content: ' ';
   background: black;
   width: 100%;

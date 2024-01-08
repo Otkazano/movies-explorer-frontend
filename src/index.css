@@ -8,11 +8,11 @@ html {
 .buttons-hover-style:hover {
   cursor: pointer;
   opacity: 0.8;
-  transition: all 0.7s linear;
+  transition: all 0.7s ease;
 }
 
 .links-hover-style:hover {
   cursor: pointer;
   opacity: 0.7;
-  transition: all 0.7s linear;
+  transition: all 0.7s ease;
 }

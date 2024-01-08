@@ -9,9 +9,9 @@ export default function MoviesCardList ({ moviesSavedPage }) {
     <section className={`cardList ${moviesSavedPage ? 'cardList_saved' : ''}`}>
       <div
         className={`cardList__items ${
-          testArrCards.length === 3 && testArrCards.length && isScreen989  ||
-          testArrCards.length === 2 && testArrCards.length && isScreen845  ||
-          testArrCards.length === 1 && testArrCards.length
+          (testArrCards.length === 3 && testArrCards.length && isScreen989) ||
+          (testArrCards.length === 2 && testArrCards.length && isScreen845) ||
+          (testArrCards.length === 1 && testArrCards.length)
             ? 'cardList__items_left'
             : ''
         }`}

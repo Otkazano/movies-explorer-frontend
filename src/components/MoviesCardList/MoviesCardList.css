@@ -6,9 +6,9 @@
   flex-direction: column;
 }
 
-/* .cardList_saved {
+.cardList_saved {
   padding-bottom: 55px;
-} */
+}
 
 .cardList__items {
   display: grid;
@@ -62,9 +62,9 @@
     min-height: calc(100vh - 661px);
   }
 
-  /* .cardList_saved {
+  .cardList_saved {
     padding-bottom: 52px;
-  } */
+  }
 
   .cardList__items {
     grid-template-columns: repeat(auto-fit, 339px);
@@ -87,7 +87,7 @@
     width: 240px;
     height: 36px;
   }
-  /* .cardList_saved {
+  .cardList_saved {
     padding-bottom: 45px;
-  } */
+  }
 }
