@@ -9,6 +9,7 @@ export default function FilterCheckbox () {
   }
   return (
     <Switch
+      id='filterCheckbox'
       onChange={handleChange}
       checked={checked}
       className='filterCheckbox'

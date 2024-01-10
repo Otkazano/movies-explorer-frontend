@@ -2,6 +2,7 @@ import './Profile.css'
 import CurrentUserContext from '../../contexts/CurrentUserContext.js'
 import React from 'react'
 import Header from '../Header/Header.jsx'
+import AuthInput from '../AuthInput/AuthInput.jsx'
 
 export default function Profile () {
   const { currentUser, isLoading, isLogged } =

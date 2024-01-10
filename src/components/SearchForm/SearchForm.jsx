@@ -39,10 +39,12 @@ export default function SearchForm () {
             aria-label='Найти фильм'
           />
         </div>
-        <label className='searchForm__filter'>
+        <div className='searchForm__filter'>
           <FilterCheckbox />
-          <span className='searchForm__filter-text'>Короткометражки</span>
-        </label>
+          <label className='searchForm__filter-text' htmlFor='filterCheckbox'>
+            Короткометражки
+          </label>
+        </div>
       </form>
     </section>
   )
