@@ -25,8 +25,7 @@ export default function SearchForm () {
         <div className='searchForm__box'>
           <input
             type='text'
-            id=''
-            name=''
+            id='inputMovie'
             className='searchForm__input'
             placeholder=' '
             autoComplete='off'

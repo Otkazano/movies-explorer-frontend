@@ -44,9 +44,9 @@ export default function Header ({ isLogged, mainPage }) {
                 Фильмы
               </Link>
               <Link
-                to={'/savedmovies'}
+                to={'/saved-movies'}
                 className={`links-hover-style header__link ${
-                  location.pathname === '/savedmovies' ? 'header__link-active' : ''
+                  location.pathname === '/saved-movies' ? 'header__link-active' : ''
                 }`}
               >
                 Сохранённые фильмы
@@ -58,7 +58,7 @@ export default function Header ({ isLogged, mainPage }) {
             <>
               {isScreen845 ? (
                 <Link
-                  to={'/'}
+                  to={'/profile'}
                   className='buttons-hover-style header__button-profile'
                 >
                   <div className='header__button-img' />

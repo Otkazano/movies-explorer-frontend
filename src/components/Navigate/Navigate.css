@@ -12,6 +12,7 @@
   justify-content: flex-end;
   margin: 0;
   padding: 0;
+  z-index: 100;
 }
 
 .navigate:hover {
@@ -21,7 +22,6 @@
 .navigate_opened {
   opacity: 1;
   visibility: visible;
-  z-index: 100;
 }
 
 .navigate__container {
@@ -67,6 +67,12 @@
   top: 22px;
   right: 22px;
   padding: 0;
+}
+
+.navigate__buttonClose:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.7s ease;
 }
 
 .navigate__link {

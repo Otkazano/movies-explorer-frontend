@@ -1,7 +1,7 @@
 .cardList {
   padding: 70px 70px 84px;
   margin: 0;
-  min-height: calc(100vh - 613px);
+  min-height: calc(100dvh - 613px);
   display: flex;
   flex-direction: column;
 }
@@ -59,7 +59,7 @@
 @media (max-width: 845px) {
   .cardList {
     padding: 70px 30px 79px;
-    min-height: calc(100vh - 661px);
+    min-height: calc(100dvh - 661px);
   }
 
   .cardList_saved {
@@ -76,7 +76,7 @@
 @media (max-width: 615px) {
   .cardList {
     padding: 18px 10px 72px;
-    min-height: calc(100vh - 695px);
+    min-height: calc(100dvh - 695px);
   }
   .cardList__items {
     grid-template-columns: repeat(auto-fit, 300px);

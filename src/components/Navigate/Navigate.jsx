@@ -13,7 +13,7 @@ export default function BurgerMenu ({ isOpened, onClose }) {
           type='button'
           aria-label='Закрыть меню'
           onClick={onClose}
-          className='navigate__buttonClose buttons-hover-style'
+          className='navigate__buttonClose'
         ></button>
         <ul className='navigate__links'>
           <li className='navigate__links-el'>
@@ -38,9 +38,9 @@ export default function BurgerMenu ({ isOpened, onClose }) {
           </li>
           <li className='navigate__links-el'>
             <Link
-              to={'/savedmovies'}
+              to={'/saved-movies'}
               className={`links-hover-style navigate__link ${
-                location.pathname === '/savedmovies'
+                location.pathname === '/saved-movies'
                   ? 'navigate__link-active'
                   : ''
               }`}
@@ -50,7 +50,10 @@ export default function BurgerMenu ({ isOpened, onClose }) {
           </li>
         </ul>
 
-        <Link to={'/'} className='buttons-hover-style navigate__buttonProfile'>
+        <Link
+          to={'/profile'}
+          className='buttons-hover-style navigate__buttonProfile'
+        >
           <div className='navigate__buttonProfile-img' />
           Аккаунт
         </Link>

@@ -6,31 +6,25 @@ import CurrentUserContext from '../../contexts/CurrentUserContext.js'
 import Movies from '../Movies/Movies.jsx'
 import SavedMovies from '../SavedMovies/SavedMovies.jsx'
 import NotFound from '../NotFound/NotDound.jsx'
+import Profile from '../Profile/Profile.jsx'
 
 export default function App () {
-  const [currentUser, setCurrentUser] = React.useState({})
+  const [currentUser, setCurrentUser] = React.useState({
+    name: 'Виталий',
+    email: 'pochta@yandex.ru'
+  })
   const [isLogged, setIsLogged] = React.useState(true)
   const [isLoading, setIsLoading] = React.useState(false)
 
   return (
-    <div className='app'>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Routes>
-          <Route
-            path='/'
-            element={<Main isLogged={isLogged} isLoading={isLoading} />}
-          />
-          <Route
-            path='/movies'
-            element={<Movies isLogged={isLogged} isLoading={isLoading} />}
-          />
-          <Route
-            path='/savedmovies'
-            element={<SavedMovies isLogged={isLogged} isLoading={isLoading} />}
-          />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </CurrentUserContext.Provider>
-    </div>
+    <CurrentUserContext.Provider value={{ currentUser, isLoading, isLogged }}>
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/movies' element={<Movies />} />
+        <Route path='/saved-movies' element={<SavedMovies />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </CurrentUserContext.Provider>
   )
 }

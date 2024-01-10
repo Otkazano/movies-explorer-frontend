@@ -8,8 +8,12 @@ import Portfolio from '../Portfolio/Portfolio'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Preloader from '../Preloader/Preloader'
+import React from 'react'
+import CurrentUserContext from '../../contexts/CurrentUserContext'
 
-export default function Main ({ isLogged, isLoading }) {
+export default function Main () {
+  const { currentUser, isLoading, isLogged } =
+    React.useContext(CurrentUserContext)
   return (
     <>
       <Header isLogged={isLogged} mainPage={true} />
