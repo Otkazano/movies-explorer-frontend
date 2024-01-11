@@ -36,6 +36,7 @@
   width: 100%;
   border: none;
   outline-color: #3456f3;
+  background-color: transparent;
 }
 
 .searchForm__input::placeholder {

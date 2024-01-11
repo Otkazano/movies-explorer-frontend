@@ -23,6 +23,7 @@
   border: none;
   outline-color: #3456f3;
   outline-width: 1px;
+  background-color: transparent;
 }
 
 .authInput::after {
