@@ -23,7 +23,7 @@ export default function MoviesCard ({ item, moviesSavedPage }) {
       />
       <div className='card__box'>
         <div className='card__info'>
-          <p className='card__name'>{item.nameRU}</p>
+          <h2 className='card__name'>{item.nameRU}</h2>
           <p className='card__duration'>{durationInHours(item.duration)}</p>
         </div>
         {!moviesSavedPage ? (
@@ -32,9 +32,13 @@ export default function MoviesCard ({ item, moviesSavedPage }) {
               liked && 'card__buttonLike_active'
             }`}
             onClick={likeCard}
+            type='button'
           ></button>
         ) : (
-          <button className='buttons-hover-style card__button card__buttonDelete'></button>
+          <button
+            className='buttons-hover-style card__button card__buttonDelete'
+            type='button'
+          ></button>
         )}
       </div>
     </article>

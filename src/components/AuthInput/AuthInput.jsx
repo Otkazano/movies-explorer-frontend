@@ -6,7 +6,7 @@ export default function AuthInput ({ idInput, typeInput, labelText, ...props }) 
       <label className='authInput__text' htmlFor={idInput}>
         {labelText}
       </label>
-      <input type={typeInput} id={idInput} className='authInput__input' autoComplete='off' {...props} />
+      <input type={typeInput} id={idInput} className='authInput__input' autoComplete='off' {...props} placeholder=' '/>
     </div>
   )
 }

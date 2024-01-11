@@ -71,11 +71,12 @@ export default function Header ({ isLogged, mainPage }) {
                   className='buttons-hover-style header__burgerMenu'
                   onClick={openBurgerMenu}
                   aria-label='Открыть меню'
+                  type='button'
                 ></button>
               )}
             </>
           ) : (
-            <div className='header__links-profile'>
+            <nav className='header__links-profile'>
               <Link
                 to={'/signup'}
                 className='buttons-hover-style header__button-signUp'
@@ -88,7 +89,7 @@ export default function Header ({ isLogged, mainPage }) {
               >
                 Войти
               </Link>
-            </div>
+            </nav>
           )}
         </div>
       </header>

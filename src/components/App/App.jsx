@@ -15,7 +15,7 @@ export default function App () {
     name: 'Виталий',
     email: 'pochta@yandex.ru'
   })
-  const [isLogged, setIsLogged] = React.useState(true)
+  const [isLogged, setIsLogged] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
 
   return (

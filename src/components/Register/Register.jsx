@@ -9,11 +9,11 @@ export default function Register () {
   const { currentUser, isLoading, isLogged } =
     React.useContext(CurrentUserContext)
 
-    
   const [nameInputRegisterInfo, setNameInputRegisterInfo] = React.useState('')
   const [emailInputRegisterInfo, setEmailInputRegisterInfo] = React.useState('')
-  const [passwordInputRegisterInfo, setPasswordInputRegisterInfo] = React.useState('')
-  
+  const [passwordInputRegisterInfo, setPasswordInputRegisterInfo] =
+    React.useState('')
+
   function handleChangeNameRegisterInfo (e) {
     setNameInputRegisterInfo(e.target.value)
   }
@@ -31,7 +31,7 @@ export default function Register () {
       <Link to={'/'}>
         <div className='register__logo buttons-hover-style' />
       </Link>
-      <h2 className='register__header'>Добро пожаловать!</h2>
+      <h1 className='register__header'>Добро пожаловать!</h1>
       <AuthForm
         idForm='registerForm'
         classForm='register__form'
@@ -44,6 +44,9 @@ export default function Register () {
           idInput='registerInputName'
           typeInput='text'
           labelText='Имя'
+          required
+          minLength={2}
+          maxLength={30}
         />
         <AuthInput
           value={emailInputRegisterInfo}
@@ -51,6 +54,7 @@ export default function Register () {
           idInput='registerInputEmail'
           typeInput='email'
           labelText='E-mail'
+          required
         />
         <AuthInput
           value={passwordInputRegisterInfo}
@@ -58,6 +62,9 @@ export default function Register () {
           idInput='registerInputPassword'
           typeInput='password'
           labelText='Пароль'
+          required
+          minLength={4}
+          maxLength={16}
         />
       </AuthForm>
       <div className='register__info'>

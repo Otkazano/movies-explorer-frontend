@@ -22,7 +22,13 @@ export default function AuthForm ({
       onSubmit={handleSubmit}
     >
       {children}
-      <button className='authForm__btn buttons-hover-style'>{buttonText}</button>
+      <button
+        className='authForm__btn buttons-hover-style'
+        type='submit'
+        form={idForm}
+      >
+        {buttonText}
+      </button>
     </form>
   )
 }

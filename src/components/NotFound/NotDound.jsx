@@ -6,7 +6,7 @@ export default function NotFound () {
   const navigate = useNavigate()
   return (
     <section className='notFound'>
-      <h3 className='notFound__title'>404</h3>
+      <h1 className='notFound__title'>404</h1>
       <p className='notFound__text'>Страница не найдена</p>
       <button
         type='button'

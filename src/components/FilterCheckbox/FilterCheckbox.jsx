@@ -24,6 +24,7 @@ export default function FilterCheckbox () {
       uncheckedIcon={false}
       checkedIcon={false}
       activeBoxShadow={'0 0 1px 2px #3456F3'}
+      aria-checked={null}
     />
   )
 }

@@ -23,9 +23,9 @@ export default function Login () {
   return (
     <main className='login'>
       <Link to={'/'}>
-          <div className='login__logo buttons-hover-style' />
-        </Link>
-      <h2 className='login__header'>Рады видеть!</h2>
+        <div className='login__logo buttons-hover-style' />
+      </Link>
+      <h1 className='login__header'>Рады видеть!</h1>
       <AuthForm
         idForm='loginForm'
         classForm='login__form'
@@ -38,6 +38,7 @@ export default function Login () {
           idInput='loginInputEmail'
           typeInput='email'
           labelText='E-mail'
+          required
         />
         <AuthInput
           value={passwordInputLoginInfo}
@@ -45,6 +46,9 @@ export default function Login () {
           idInput='loginInputPassword'
           typeInput='password'
           labelText='Пароль'
+          required
+          minLength={4}
+          maxLength={16}
         />
       </AuthForm>
       <div className='login__info'>

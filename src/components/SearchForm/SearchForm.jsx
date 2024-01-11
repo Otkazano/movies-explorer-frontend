@@ -14,6 +14,7 @@ export default function SearchForm () {
   }
   return (
     <section className='searchForm'>
+      <h2 hidden={true}>Форма поиска фильмов</h2>
       <form
         action='#'
         id='searchForm'
@@ -31,6 +32,7 @@ export default function SearchForm () {
             autoComplete='off'
             value={movieName}
             onChange={handleChangeMovieName}
+            required
           />
           <button
             type='submit'

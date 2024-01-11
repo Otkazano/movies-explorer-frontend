@@ -5,12 +5,12 @@ export default function AboutProject () {
     <section className='aboutProject' id='aboutProject'>
       <h2 className='main__subtitle'>О проекте</h2>
       <div className='aboutProject__textBox'>
-        <p className='aboutProject__text-title grid-title-first'>
+        <h3 className='aboutProject__text-title grid-title-first'>
           Дипломный проект включал 5 этапов
-        </p>
-        <p className='aboutProject__text-title grid-title-second'>
+        </h3>
+        <h3 className='aboutProject__text-title grid-title-second'>
           На выполнение диплома ушло 5 недель
-        </p>
+        </h3>
         <p className='aboutProject__text-info grid-text-first'>
           Составление плана, работу над бэкендом, вёрстку, добавление
           функциональности и финальные доработки.
