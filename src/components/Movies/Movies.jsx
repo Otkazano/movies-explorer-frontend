@@ -8,14 +8,14 @@ import React from 'react'
 import CurrentUserContext from '../../contexts/CurrentUserContext'
 
 export default function Movies () {
-  const { currentUser, isLoading, isLogged } =
+  const { currentUser, isLoading, isLogged, movies } =
     React.useContext(CurrentUserContext)
   return (
     <>
       <Header isLogged={isLogged} mainPage={false} />
       <main>
         <SearchForm />
-        <MoviesCardList moviesSavedPage={false} />
+        <MoviesCardList moviesSavedPage={false} movies={movies} />
       </main>
       <Footer />
       {isLoading && <Preloader />}

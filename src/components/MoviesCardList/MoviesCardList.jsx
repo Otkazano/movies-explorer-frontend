@@ -1,29 +1,28 @@
 import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard.jsx'
-import { testArrCards } from '../../vendor/testArrCards.js'
 import { useResize } from '../../hooks/useResize'
 
-export default function MoviesCardList ({ moviesSavedPage }) {
+export default function MoviesCardList ({ moviesSavedPage, movies }) {
   const { isScreen845, isScreen989 } = useResize()
   return (
     <section className={`cardList ${moviesSavedPage ? 'cardList_saved' : ''}`}>
       <h1 hidden={true}>Список фильмов</h1>
       <ul
         className={`cardList__items ${
-          (testArrCards.length === 3 && testArrCards.length && isScreen989) ||
-          (testArrCards.length === 2 && testArrCards.length && isScreen845) ||
-          (testArrCards.length === 1 && testArrCards.length)
+          (movies.length === 3 && movies.length && isScreen989) ||
+          (movies.length === 2 && movies.length && isScreen845) ||
+          (movies.length === 1 && movies.length)
             ? 'cardList__items_left'
             : ''
         }`}
       >
-        {testArrCards.length ? (
+        {movies.length ? (
           <>
-            {testArrCards.map(item => (
-              <li>
+            {movies.map(item => (
+              <li key={item.id}>
                 <MoviesCard
                   item={item}
-                  key={item.id}
+                  
                   moviesSavedPage={moviesSavedPage}
                 />
               </li>

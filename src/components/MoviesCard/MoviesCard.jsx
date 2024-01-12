@@ -16,11 +16,18 @@ export default function MoviesCard ({ item, moviesSavedPage }) {
 
   return (
     <article className='card'>
-      <img
-        src={`https://api.nomoreparties.co${item.image.formats.small.url}`}
-        alt='постер фильма'
-        className='card__img'
-      />
+      <a
+        href={item.trailerLink}
+        className='card__link links-hover-style'
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          src={`https://api.nomoreparties.co${item.image.url}`}
+          alt='постер фильма'
+          className='card__img'
+        />
+      </a>
       <div className='card__box'>
         <div className='card__info'>
           <h2 className='card__name'>{item.nameRU}</h2>
