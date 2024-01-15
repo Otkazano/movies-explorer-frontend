@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx'
 import AuthInput from '../AuthInput/AuthInput.jsx'
 import { useNavigate } from 'react-router-dom'
 
-export default function Profile () {
+export default function Profile ({ onSignOut }) {
   const { currentUser, isLoading, isLogged } =
     React.useContext(CurrentUserContext)
 
@@ -34,6 +34,7 @@ export default function Profile () {
 
   function handlerClickExitFromAccount (e) {
     e.preventDefault()
+    onSignOut()
     navigate('/')
   }
 

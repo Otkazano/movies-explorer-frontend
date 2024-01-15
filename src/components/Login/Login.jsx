@@ -6,11 +6,19 @@ import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
-export default function Login () {
+export default function Login ({ onLogin }) {
   const { currentUser, isLoading, isLogged } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
+
+  function handleSubmit (e) {
+    e.preventDefault()
+    onLogin({
+      email: values.email,
+      password: values.password
+    })
+  }
 
   return (
     <main className='login'>
@@ -22,7 +30,7 @@ export default function Login () {
         idForm='loginForm'
         classForm='login__form'
         buttonText='Войти'
-        onSubmit={() => {}}
+        onSubmit={handleSubmit}
         isValid={isValid}
       >
         <AuthInput
@@ -32,9 +40,7 @@ export default function Login () {
           typeInput='email'
           labelText='E-mail'
           required
-          error={
-            errors.loginInputEmail ? 'Неверный формат электронной почты.' : ''
-          }
+          error={errors.loginInputEmail}
         />
         <AuthInput
           value={values.password}

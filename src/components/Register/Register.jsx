@@ -6,11 +6,20 @@ import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
-export default function Register () {
+export default function Register ({ onRegister }) {
   const { currentUser, isLoading, isLogged } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
+
+  function handleSubmit (e) {
+    e.preventDefault()
+    onRegister({
+      name: values.name,
+      email: values.email,
+      password: values.password
+    })
+  }
 
   return (
     <main className='register'>
@@ -22,7 +31,7 @@ export default function Register () {
         idForm='registerForm'
         classForm='register__form'
         buttonText='Зарегистрироваться'
-        onSubmit={() => {}}
+        onSubmit={handleSubmit}
         isValid={isValid}
       >
         <AuthInput

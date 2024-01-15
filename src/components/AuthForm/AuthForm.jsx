@@ -8,10 +8,6 @@ export default function AuthForm ({
   children,
   isValid
 }) {
-  function handleSubmit (e) {
-    e.preventDefault()
-    onSubmit()
-  }
 
   return (
     <form
@@ -20,7 +16,7 @@ export default function AuthForm ({
       className={`${classForm} authForm`}
       method='POST'
       name={idForm}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       noValidate
     >
       {children}
