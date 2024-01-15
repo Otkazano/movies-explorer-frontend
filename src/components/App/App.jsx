@@ -13,10 +13,10 @@ import movieApi from '../../utils/MoviesApi.js'
 
 export default function App () {
   const [currentUser, setCurrentUser] = React.useState({
-    name: 'Виталий',
-    email: 'pochta@yandex.ru'
+    name: '',
+    email: ''
   })
-  const [isLogged, setIsLogged] = React.useState(true)
+  const [isLogged, setIsLogged] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [movies, setMovies] = React.useState([])
 

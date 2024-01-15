@@ -54,6 +54,10 @@
   text-decoration: none;
 }
 
+.register__link-logo {
+  width: fit-content;
+}
+
 @media (max-width: 845px) {
   .register {
     padding: 232px 0 288px;

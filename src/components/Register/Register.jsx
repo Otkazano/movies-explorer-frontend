@@ -4,31 +4,17 @@ import React from 'react'
 import CurrentUserContext from '../../contexts/CurrentUserContext'
 import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
+import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
 export default function Register () {
   const { currentUser, isLoading, isLogged } =
     React.useContext(CurrentUserContext)
 
-  const [nameInputRegisterInfo, setNameInputRegisterInfo] = React.useState('')
-  const [emailInputRegisterInfo, setEmailInputRegisterInfo] = React.useState('')
-  const [passwordInputRegisterInfo, setPasswordInputRegisterInfo] =
-    React.useState('')
-
-  function handleChangeNameRegisterInfo (e) {
-    setNameInputRegisterInfo(e.target.value)
-  }
-
-  function handleChangeEmailRegisterInfo (e) {
-    setEmailInputRegisterInfo(e.target.value)
-  }
-
-  function handleChangePasswordRegisterInfo (e) {
-    setPasswordInputRegisterInfo(e.target.value)
-  }
+  const { values, errors, isValid, handleChange } = useFormWithValidation()
 
   return (
     <main className='register'>
-      <Link to={'/'}>
+      <Link to={'/'} className='register__link-logo'>
         <div className='register__logo buttons-hover-style' />
       </Link>
       <h1 className='register__header'>Добро пожаловать!</h1>
@@ -37,34 +23,44 @@ export default function Register () {
         classForm='register__form'
         buttonText='Зарегистрироваться'
         onSubmit={() => {}}
+        isValid={isValid}
       >
         <AuthInput
-          value={nameInputRegisterInfo}
-          onChange={handleChangeNameRegisterInfo}
+          value={values.name}
+          onChange={handleChange}
           idInput='registerInputName'
           typeInput='text'
           labelText='Имя'
           required
           minLength={2}
           maxLength={30}
+          pattern='^[A-Za-zА-Яа-яЁё - \s]+$'
+          error={
+            errors.registerInputName === 'Введите данные в указанном формате.'
+              ? `Поле должно быть заполнено и может содержать только латиницу,
+                кириллицу, пробел или дефис`
+              : errors.registerInputName
+          }
         />
         <AuthInput
-          value={emailInputRegisterInfo}
-          onChange={handleChangeEmailRegisterInfo}
+          value={values.email}
+          onChange={handleChange}
           idInput='registerInputEmail'
           typeInput='email'
           labelText='E-mail'
           required
+          error={errors.registerInputEmail}
         />
         <AuthInput
-          value={passwordInputRegisterInfo}
-          onChange={handleChangePasswordRegisterInfo}
+          value={values.password}
+          onChange={handleChange}
           idInput='registerInputPassword'
           typeInput='password'
           labelText='Пароль'
           required
-          minLength={4}
+          minLength={2}
           maxLength={16}
+          error={errors.registerInputPassword}
         />
       </AuthForm>
       <div className='register__info'>

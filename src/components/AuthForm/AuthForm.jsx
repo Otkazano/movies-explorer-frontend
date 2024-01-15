@@ -5,7 +5,8 @@ export default function AuthForm ({
   classForm,
   buttonText,
   onSubmit,
-  children
+  children,
+  isValid
 }) {
   function handleSubmit (e) {
     e.preventDefault()
@@ -20,12 +21,16 @@ export default function AuthForm ({
       method='POST'
       name={idForm}
       onSubmit={handleSubmit}
+      noValidate
     >
       {children}
       <button
-        className='authForm__btn buttons-hover-style'
+        className={`authForm__btn ${
+          isValid ? 'buttons-hover-style' : 'authForm__btn-disabled'
+        }`}
         type='submit'
         form={idForm}
+        disabled={!isValid}
       >
         {buttonText}
       </button>
