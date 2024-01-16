@@ -5,9 +5,10 @@ import CurrentUserContext from '../../contexts/CurrentUserContext'
 import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import Preloader from '../Preloader/Preloader'
 
 export default function Login ({ onLogin }) {
-  const { currentUser, isLoading, isLogged } =
+  const { currentUser, isLoading, isLogged, apiStatus } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
@@ -15,8 +16,8 @@ export default function Login ({ onLogin }) {
   function handleSubmit (e) {
     e.preventDefault()
     onLogin({
-      email: values.email,
-      password: values.password
+      email: values.loginInputEmail,
+      password: values.loginInputPassword
     })
   }
 
@@ -32,18 +33,20 @@ export default function Login ({ onLogin }) {
         buttonText='Войти'
         onSubmit={handleSubmit}
         isValid={isValid}
+        apiInfo={apiStatus}
       >
         <AuthInput
-          value={values.email}
+          value={values.loginInputEmail || ''}
           onChange={handleChange}
           idInput='loginInputEmail'
           typeInput='email'
           labelText='E-mail'
           required
           error={errors.loginInputEmail}
+          pattern='^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$'
         />
         <AuthInput
-          value={values.password}
+          value={values.loginInputPassword || ''}
           onChange={handleChange}
           idInput='loginInputPassword'
           typeInput='password'
@@ -60,6 +63,7 @@ export default function Login ({ onLogin }) {
           Регистрация
         </Link>
       </div>
+      {isLoading && <Preloader />}
     </main>
   )
 }

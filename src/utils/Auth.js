@@ -9,7 +9,7 @@ class Auth {
       return res.json()
     }
 
-    return Promise.reject(new Error(`${res.status}`))
+    return res.json().then(err => Promise.reject(err))
   }
 
   _request (url, options) {
@@ -22,8 +22,8 @@ class Auth {
       method: 'POST',
       body: JSON.stringify({
         email: email,
-        password: password,
-        name: name
+        name: name,
+        password: password
       })
     })
   }
@@ -36,6 +36,15 @@ class Auth {
         email: email,
         password: password
       })
+    })
+  }
+
+  getInfo (token) {
+    return this._request(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
   }
 }

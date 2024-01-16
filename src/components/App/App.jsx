@@ -21,25 +21,21 @@ export default function App () {
   const [isLogged, setIsLogged] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [movies, setMovies] = React.useState([])
+  const [apiStatus, setApiStatus] = React.useState({
+    message: '',
+    status: false
+  })
 
   const navigate = useNavigate()
 
   function auth (token) {
-    mainApi
-      .setAuthorizationHeader(token)
-      .then(() => {
-        mainApi.getCurrentUser
-          .then(() => {
-            localStorage.setItem('isLogged', JSON.stringify(true))
-            setIsLogged(true)
-            navigate('/movies')
-          })
-          .catch(() => {
-            localStorage.setItem('loggedIn', JSON.stringify(false))
-          })
+    authApi
+      .getInfo(token)
+      .then(res => {
+        setIsLogged(true)
       })
       .catch(() => {
-        localStorage.setItem('loggedIn', JSON.stringify(false))
+        navigate('/')
       })
   }
 
@@ -47,11 +43,27 @@ export default function App () {
     setIsLoading(true)
     return authApi
       .register(email, password, name)
-      .then(() => {
+      .then(res => {
+        setApiStatus({
+          message: 'Вы успешно зарегестрировались!',
+          status: true
+        })
+        setIsLogged(true)
+        localStorage.setItem('jwt', res.token)
         navigate('/movies')
       })
       .catch(err => {
-        console.log('ошибка регистрации', err)
+        {
+          err.message === 'Validation failed'
+            ? setApiStatus({
+                message: 'При регистрации пользователя произошла ошибка',
+                status: false
+              })
+            : setApiStatus({
+                message: err.message,
+                status: false
+              })
+        }
       })
       .finally(() => {
         setIsLoading(false)
@@ -59,20 +71,32 @@ export default function App () {
   }
 
   function handleLogin ({ email, password }) {
-    localStorage.setItem('email', email)
     setIsLoading(true)
     return authApi
       .authorize(email, password)
       .then(res => {
         if (res.token) {
+          setApiStatus({
+            message: 'Вы успешно вошли в аккаунт!',
+            status: true
+          })
           setIsLogged(true)
           localStorage.setItem('jwt', res.token)
-          localStorage.setItem('loggedIn', JSON.stringify(true))
           navigate('/movies')
         }
       })
       .catch(err => {
-        console.log('ошибка входа', err)
+        {
+          err.message === 'Validation failed'
+            ? setApiStatus({
+                message: 'Неправильные почта или пароль',
+                status: false
+              })
+            : setApiStatus({
+                message: err.message,
+                status: false
+              })
+        }
       })
       .finally(() => {
         setIsLoading(false)
@@ -82,6 +106,14 @@ export default function App () {
   function onSignOut () {
     localStorage.clear()
     setIsLogged(false)
+    setCurrentUser({
+      name: '',
+      email: ''
+    })
+    setApiStatus({
+      message: '',
+      status: false
+    })
   }
 
   React.useEffect(() => {
@@ -103,7 +135,7 @@ export default function App () {
 
   return (
     <CurrentUserContext.Provider
-      value={{ currentUser, isLoading, isLogged, movies }}
+      value={{ currentUser, isLoading, isLogged, movies, apiStatus }}
     >
       <Routes>
         <Route path='/' element={<Main />} />

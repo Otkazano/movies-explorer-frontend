@@ -5,9 +5,10 @@ import CurrentUserContext from '../../contexts/CurrentUserContext'
 import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import Preloader from '../Preloader/Preloader'
 
 export default function Register ({ onRegister }) {
-  const { currentUser, isLoading, isLogged } =
+  const { currentUser, isLoading, isLogged, apiStatus } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
@@ -15,12 +16,11 @@ export default function Register ({ onRegister }) {
   function handleSubmit (e) {
     e.preventDefault()
     onRegister({
-      name: values.name,
-      email: values.email,
-      password: values.password
+      name: values.registerInputName,
+      email: values.registerInputEmail,
+      password: values.registerInputPassword
     })
   }
-
   return (
     <main className='register'>
       <Link to={'/'} className='register__link-logo'>
@@ -33,9 +33,10 @@ export default function Register ({ onRegister }) {
         buttonText='Зарегистрироваться'
         onSubmit={handleSubmit}
         isValid={isValid}
+        apiInfo={apiStatus}
       >
         <AuthInput
-          value={values.name}
+          value={values.registerInputName || ''}
           onChange={handleChange}
           idInput='registerInputName'
           typeInput='text'
@@ -52,16 +53,17 @@ export default function Register ({ onRegister }) {
           }
         />
         <AuthInput
-          value={values.email}
+          value={values.registerInputEmail || ''}
           onChange={handleChange}
           idInput='registerInputEmail'
           typeInput='email'
           labelText='E-mail'
           required
+          pattern='^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$'
           error={errors.registerInputEmail}
         />
         <AuthInput
-          value={values.password}
+          value={values.registerInputPassword || ''}
           onChange={handleChange}
           idInput='registerInputPassword'
           typeInput='password'
@@ -78,6 +80,7 @@ export default function Register ({ onRegister }) {
           Войти
         </Link>
       </div>
+      {isLoading && <Preloader />}
     </main>
   )
 }

@@ -8,7 +8,7 @@ export function useFormWithValidation () {
   const handleChange = event => {
     const target = event.target
     const id = target.id
-    const value = target.value
+    const value = target.value 
     setValues({ ...values, [id]: value })
     setErrors({ ...errors, [id]: target.validationMessage })
     setIsValid(target.closest('form').checkValidity())
