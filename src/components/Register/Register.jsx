@@ -8,7 +8,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import Preloader from '../Preloader/Preloader'
 
 export default function Register ({ onRegister }) {
-  const { currentUser, isLoading, isLogged, apiStatus } =
+  const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
@@ -21,6 +21,11 @@ export default function Register ({ onRegister }) {
       password: values.registerInputPassword
     })
   }
+
+  React.useEffect(() => {
+    setApiMessage('')
+  }, [])
+
   return (
     <main className='register'>
       <Link to={'/'} className='register__link-logo'>
@@ -33,7 +38,7 @@ export default function Register ({ onRegister }) {
         buttonText='Зарегистрироваться'
         onSubmit={handleSubmit}
         isValid={isValid}
-        apiInfo={apiStatus}
+        apiMessage={apiMessage}
       >
         <AuthInput
           value={values.registerInputName || ''}
@@ -44,7 +49,7 @@ export default function Register ({ onRegister }) {
           required
           minLength={2}
           maxLength={30}
-          pattern='^[A-Za-zА-Яа-яЁё - \s]+$'
+          pattern='^[^\s][A-Za-zА-Яа-яЁё - \s]+$'
           error={
             errors.registerInputName === 'Введите данные в указанном формате.'
               ? `Поле должно быть заполнено и может содержать только латиницу,
@@ -59,7 +64,7 @@ export default function Register ({ onRegister }) {
           typeInput='email'
           labelText='E-mail'
           required
-          pattern='^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$'
+          pattern='^[^\s][\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$'
           error={errors.registerInputEmail}
         />
         <AuthInput
@@ -69,6 +74,7 @@ export default function Register ({ onRegister }) {
           typeInput='password'
           labelText='Пароль'
           required
+          pattern='^[^\s]*$'
           minLength={2}
           maxLength={16}
           error={errors.registerInputPassword}

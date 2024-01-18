@@ -7,7 +7,7 @@ export default function AuthForm ({
   onSubmit,
   children,
   isValid,
-  apiInfo
+  apiMessage
 }) {
   return (
     <form
@@ -22,13 +22,7 @@ export default function AuthForm ({
       {children}
 
       <div className='authForm__box'>
-        <span
-          className={`authForm__apiInfo ${
-            !apiInfo.status ? 'authForm__apiInfo-red' : 'authForm__apiInfo-green'
-          }`}
-        >
-          {apiInfo.message}
-        </span>
+        <span className='authForm__apiMessage'>{apiMessage}</span>
         <button
           className={`authForm__btn ${
             isValid ? 'buttons-hover-style' : 'authForm__btn-disabled'

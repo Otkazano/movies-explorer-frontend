@@ -4,10 +4,15 @@ import React from 'react'
 import Header from '../Header/Header.jsx'
 import AuthInput from '../AuthInput/AuthInput.jsx'
 import { useNavigate } from 'react-router-dom'
+import { useFormWithValidation } from '../../hooks/useFormWithValidation.js'
+import Preloader from '../Preloader/Preloader.jsx'
 
-export default function Profile ({ onSignOut }) {
-  const { currentUser, isLoading, isLogged } =
+export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
+  const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
     React.useContext(CurrentUserContext)
+
+  const { values, errors, isValid, handleChange, setValues, setIsValid } =
+    useFormWithValidation()
 
   const [userName, setUserName] = React.useState(currentUser.name)
   const [userEmail, setUserEmail] = React.useState(currentUser.email)
@@ -19,16 +24,12 @@ export default function Profile ({ onSignOut }) {
     setEditInfo(true)
   }
 
-  function handleChangeUserName (e) {
-    setUserName(e.target.value)
-  }
-
-  function handleChangeUserEmail (e) {
-    setUserEmail(e.target.value)
-  }
-
   function handleSubmit (e) {
     e.preventDefault()
+    onUpdateUserInfo({
+      nameUser: values.userNameInput,
+      emailUser: values.userEmailInput
+    })
     setEditInfo(false)
   }
 
@@ -37,6 +38,29 @@ export default function Profile ({ onSignOut }) {
     onSignOut()
     navigate('/')
   }
+
+  React.useEffect(() => {
+    withOpen()
+    setApiMessage('')
+  }, [])
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setValues({
+        userNameInput: currentUser.name,
+        userEmailInput: currentUser.email
+      })
+    }
+  }, [setValues, currentUser])
+
+  React.useEffect(() => {
+    if (
+      currentUser.name === values.userNameInput &&
+      currentUser.email === values.userEmailInput
+    ) {
+      setIsValid(false)
+    }
+  }, [setIsValid, values, currentUser])
 
   React.useEffect(() => {
     if (editInfo) {
@@ -58,46 +82,64 @@ export default function Profile ({ onSignOut }) {
             method='POST'
             name='profileForm'
             onSubmit={handleSubmit}
+            noValidate
           >
             <label className='profile__box'>
-              <span className='profile__input-text'>Имя</span>
+              <span className='profile__input-name'>Имя</span>
               <input
                 type='text'
                 id='userNameInput'
                 className='profile__input'
                 autoComplete='off'
-                value={userName}
-                onChange={handleChangeUserName}
+                value={values.userNameInput || ''}
+                onChange={handleChange}
                 disabled={!editInfo}
                 placeholder=' '
                 minLength={2}
                 maxLength={30}
                 required
+                pattern='^[^\s][A-Za-zА-Яа-яЁё - \s]+$'
               />
+              <span className='progile__input-error'>
+                {errors.userNameInput === 'Введите данные в указанном формате.'
+                  ? `Поле должно быть заполнено и может содержать только латиницу,
+                кириллицу, пробел или дефис`
+                  : errors.userNameInput}
+              </span>
             </label>
             <label className='profile__box'>
-              <span className='profile__input-text'>E-mail</span>
+              <span className='profile__input-name'>E-mail</span>
               <input
-                type='text'
+                type='email'
                 id='userEmailInput'
                 className='profile__input'
                 autoComplete='off'
-                value={userEmail}
-                onChange={handleChangeUserEmail}
+                value={values.userEmailInput || ''}
+                onChange={handleChange}
                 disabled={!editInfo}
                 placeholder=' '
                 required
+                pattern='^[^\s][\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$'
               />
+              <span className='progile__input-error'>
+                {errors.userEmailInput}
+              </span>
             </label>
 
-            <button
-              className='profile__btn-save buttons-hover-style'
-              hidden={!editInfo}
-              type='submit'
-              form='profileForm'
-            >
-              Сохранить
-            </button>
+            <div className='profile__boxBtnSave'>
+              <span className='profile__apiMessage'>{apiMessage}</span>
+              <button
+                className={`profile__btn-save ${
+                  isValid ? 'buttons-hover-style' : 'profile__btn-save-disabled'
+                }`}
+                hidden={!editInfo}
+                type='submit'
+                form='profileForm'
+                disabled={!isValid}
+              >
+                Сохранить
+              </button>
+            </div>
           </form>
           <div className='profile__panel'>
             <button
@@ -118,6 +160,7 @@ export default function Profile ({ onSignOut }) {
             </button>
           </div>
         </section>
+        {isLoading && <Preloader />}
       </main>
     </>
   )

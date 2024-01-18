@@ -21,10 +21,7 @@ export default function App () {
   const [isLogged, setIsLogged] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [movies, setMovies] = React.useState([])
-  const [apiStatus, setApiStatus] = React.useState({
-    message: '',
-    status: false
-  })
+  const [apiMessage, setApiMessage] = React.useState('')
 
   const navigate = useNavigate()
 
@@ -44,10 +41,7 @@ export default function App () {
     return authApi
       .register(email, password, name)
       .then(res => {
-        setApiStatus({
-          message: 'Вы успешно зарегестрировались!',
-          status: true
-        })
+        setApiMessage('')
         setIsLogged(true)
         localStorage.setItem('jwt', res.token)
         navigate('/movies')
@@ -55,14 +49,8 @@ export default function App () {
       .catch(err => {
         {
           err.message === 'Validation failed'
-            ? setApiStatus({
-                message: 'При регистрации пользователя произошла ошибка',
-                status: false
-              })
-            : setApiStatus({
-                message: err.message,
-                status: false
-              })
+            ? setApiMessage('При регистрации пользователя произошла ошибка')
+            : setApiMessage(err.message)
         }
       })
       .finally(() => {
@@ -75,27 +63,16 @@ export default function App () {
     return authApi
       .authorize(email, password)
       .then(res => {
-        if (res.token) {
-          setApiStatus({
-            message: 'Вы успешно вошли в аккаунт!',
-            status: true
-          })
-          setIsLogged(true)
-          localStorage.setItem('jwt', res.token)
-          navigate('/movies')
-        }
+        setApiMessage('')
+        setIsLogged(true)
+        localStorage.setItem('jwt', res.token)
+        navigate('/movies')
       })
       .catch(err => {
         {
           err.message === 'Validation failed'
-            ? setApiStatus({
-                message: 'Неправильные почта или пароль',
-                status: false
-              })
-            : setApiStatus({
-                message: err.message,
-                status: false
-              })
+            ? setApiMessage('Неправильные почта или пароль')
+            : setApiMessage(err.message)
         }
       })
       .finally(() => {
@@ -110,10 +87,51 @@ export default function App () {
       name: '',
       email: ''
     })
-    setApiStatus({
-      message: '',
-      status: false
-    })
+    setApiMessage('')
+  }
+
+  function getUserInfo () {
+    setIsLoading(true)
+    mainApi.setAuthorizationHeader(localStorage.getItem('jwt'))
+    return mainApi
+      .getCurrentUser()
+      .then(res => {
+        setCurrentUser({
+          name: res.name,
+          email: res.email
+        })
+      })
+      .catch(err => {
+        {
+          err.message === 'Validation failed'
+            ? setApiMessage('Неправильные почта или имя')
+            : setApiMessage(err.message)
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function handleUpdateUserInfo ({ emailUser, nameUser }) {
+    setIsLoading(true)
+    mainApi.setAuthorizationHeader(localStorage.getItem('jwt'))
+    return mainApi
+      .changeUserInfo({emailUser, nameUser})
+      .then(res => {
+        setCurrentUser({
+          name: res.name,
+          email: res.email
+        })
+        setApiMessage('')
+      })
+      .catch(err => {
+        console.log(err)
+        setApiMessage(err.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   React.useEffect(() => {
@@ -135,13 +153,29 @@ export default function App () {
 
   return (
     <CurrentUserContext.Provider
-      value={{ currentUser, isLoading, isLogged, movies, apiStatus }}
+      value={{
+        currentUser,
+        isLoading,
+        isLogged,
+        movies,
+        apiMessage,
+        setApiMessage
+      }}
     >
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/saved-movies' element={<SavedMovies />} />
-        <Route path='/profile' element={<Profile onSignOut={onSignOut} />} />
+        <Route
+          path='/profile'
+          element={
+            <Profile
+              onSignOut={onSignOut}
+              withOpen={getUserInfo}
+              onUpdateUserInfo={handleUpdateUserInfo}
+            />
+          }
+        />
         <Route path='/signin' element={<Login onLogin={handleLogin} />} />
         <Route
           path='/signup'

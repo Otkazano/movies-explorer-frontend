@@ -8,7 +8,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import Preloader from '../Preloader/Preloader'
 
 export default function Login ({ onLogin }) {
-  const { currentUser, isLoading, isLogged, apiStatus } =
+  const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
     React.useContext(CurrentUserContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
@@ -20,6 +20,10 @@ export default function Login ({ onLogin }) {
       password: values.loginInputPassword
     })
   }
+
+  React.useEffect(() => {
+    setApiMessage('')
+  }, [])
 
   return (
     <main className='login'>
@@ -33,7 +37,7 @@ export default function Login ({ onLogin }) {
         buttonText='Войти'
         onSubmit={handleSubmit}
         isValid={isValid}
-        apiInfo={apiStatus}
+        apiMessage={apiMessage}
       >
         <AuthInput
           value={values.loginInputEmail || ''}
@@ -52,6 +56,7 @@ export default function Login ({ onLogin }) {
           typeInput='password'
           labelText='Пароль'
           required
+          pattern='^[^\s]*$'
           minLength={2}
           maxLength={16}
           error={errors.loginInputPassword}

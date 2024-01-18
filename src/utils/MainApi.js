@@ -11,7 +11,7 @@ class MainApi {
       return res.json()
     }
 
-    return Promise.reject(new Error(`${res.status}`))
+    return res.json().then(err => Promise.reject(err))
   }
 
   _request (url, options) {
