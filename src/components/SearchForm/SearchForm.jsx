@@ -5,6 +5,11 @@ import './SearchForm.css'
 export default function SearchForm () {
   const [movieName, setMovieName] = React.useState('')
 
+  const [checkedFilter, setCheckedFilter] = React.useState(false)
+  const handleChangeCheckedFilter = nextChecked => {
+    setCheckedFilter(nextChecked)
+  }
+
   function handleChangeMovieName (e) {
     setMovieName(e.target.value)
   }
@@ -42,7 +47,10 @@ export default function SearchForm () {
           />
         </div>
         <div className='searchForm__filter'>
-          <FilterCheckbox />
+          <FilterCheckbox
+            checked={checkedFilter}
+            handleChange={handleChangeCheckedFilter}
+          />
           <label className='searchForm__filter-text' htmlFor='filterCheckbox'>
             Короткометражки
           </label>

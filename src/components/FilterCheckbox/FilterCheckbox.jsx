@@ -2,11 +2,7 @@ import React from 'react'
 import './FilterCheckbox.css'
 import Switch from 'react-switch'
 
-export default function FilterCheckbox () {
-  const [checked, setChecked] = React.useState(false)
-  const handleChange = nextChecked => {
-    setChecked(nextChecked)
-  }
+export default function FilterCheckbox ({ checked, handleChange }) {
   return (
     <Switch
       id='filterCheckbox'
