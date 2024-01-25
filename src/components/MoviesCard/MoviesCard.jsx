@@ -1,18 +1,32 @@
 import React from 'react'
 import './MoviesCard.css'
+import GlobalContext from '../../contexts/GlobalContext'
 
-export default function MoviesCard ({ item, moviesSavedPage }) {
+export default function MoviesCard ({ item, moviesSavedPage, isLiked }) {
+  const { handleSaveMovie, handleDeleteMovie } = React.useContext(GlobalContext)
   const [liked, setLiked] = React.useState(false)
-
-  function likeCard () {
-    !liked ? setLiked(true) : setLiked(false)
-  }
+  const imgUrl = item.image.url
+    ? `https://api.nomoreparties.co${item.image.url}`
+    : item.image
 
   function durationInHours (mins) {
     const hours = Math.trunc(mins / 60)
     const minutes = mins % 60
     return `${hours}ч ${minutes}м`
   }
+
+  function handleLikeClick () {
+    !liked ? setLiked(true) : setLiked(false)
+    !liked ? handleSaveMovie(item) : handleDeleteMovie(item)
+  }
+
+  function handleDeleteClick () {
+    handleDeleteMovie(item)
+  }
+
+  React.useEffect(() => {
+    setLiked(isLiked)
+  }, [isLiked])
 
   return (
     <article className='card'>
@@ -22,11 +36,7 @@ export default function MoviesCard ({ item, moviesSavedPage }) {
         target='_blank'
         rel='noopener noreferrer'
       >
-        <img
-          src={`https://api.nomoreparties.co${item.image.url}`}
-          alt='постер фильма'
-          className='card__img'
-        />
+        <img src={imgUrl} alt='постер фильма' className='card__img' />
       </a>
       <div className='card__box'>
         <div className='card__info'>
@@ -38,13 +48,14 @@ export default function MoviesCard ({ item, moviesSavedPage }) {
             className={`buttons-hover-style card__button card__buttonLike ${
               liked && 'card__buttonLike_active'
             }`}
-            onClick={likeCard}
+            onClick={handleLikeClick}
             type='button'
           ></button>
         ) : (
           <button
             className='buttons-hover-style card__button card__buttonDelete'
             type='button'
+            onClick={handleDeleteClick}
           ></button>
         )}
       </div>

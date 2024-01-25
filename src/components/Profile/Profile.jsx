@@ -1,5 +1,5 @@
 import './Profile.css'
-import CurrentUserContext from '../../contexts/CurrentUserContext.js'
+import GlobalContext from '../../contexts/GlobalContext.js'
 import React from 'react'
 import Header from '../Header/Header.jsx'
 import AuthInput from '../AuthInput/AuthInput.jsx'
@@ -9,7 +9,7 @@ import Preloader from '../Preloader/Preloader.jsx'
 
 export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
   const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
-    React.useContext(CurrentUserContext)
+    React.useContext(GlobalContext)
 
   const { values, errors, isValid, handleChange, setValues, setIsValid } =
     useFormWithValidation()

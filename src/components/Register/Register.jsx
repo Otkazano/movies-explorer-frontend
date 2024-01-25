@@ -1,7 +1,7 @@
 import './Register.css'
 import AuthForm from '../AuthForm/AuthForm'
 import React from 'react'
-import CurrentUserContext from '../../contexts/CurrentUserContext'
+import GlobalContext from '../../contexts/GlobalContext'
 import AuthInput from '../AuthInput/AuthInput'
 import { Link } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
@@ -9,7 +9,7 @@ import Preloader from '../Preloader/Preloader'
 
 export default function Register ({ onRegister }) {
   const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
-    React.useContext(CurrentUserContext)
+    React.useContext(GlobalContext)
 
   const { values, errors, isValid, handleChange } = useFormWithValidation()
 

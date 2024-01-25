@@ -52,8 +52,7 @@ class MainApi {
       description,
       image,
       trailerLink,
-      thumbnail,
-      movieId,
+      id,
       nameRU,
       nameEN
     } = movie
@@ -66,25 +65,26 @@ class MainApi {
         duration,
         year,
         description,
-        image,
+        image: `https://api.nomoreparties.co${image.url}`,
         trailerLink,
-        thumbnail,
-        movieId,
+        thumbnail: `https://api.nomoreparties.co${image.url}`,
+        movieId: id,
         nameRU,
         nameEN
-      }).then(this._getResponse)
+      })
     })
   }
 
   deleteMovie (id) {
-    return fetch(`${this._moviesUrl}/${id}`, {
+    return this._request(`${this._moviesUrl}/${id}`, {
       headers: this._headers,
       method: 'DELETE'
-    }).then(this._getResponse)
+    })
   }
 
   getSavedMovies () {
-    return fetch(this._moviesUrl, {
+    this.setAuthorizationHeader(localStorage.getItem('jwt'))
+    return this._request(this._moviesUrl, {
       headers: this._headers,
       method: 'GET'
     })

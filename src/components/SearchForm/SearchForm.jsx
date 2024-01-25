@@ -2,21 +2,18 @@ import React from 'react'
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
 import './SearchForm.css'
 
-export default function SearchForm () {
-  const [movieName, setMovieName] = React.useState('')
-
-  const [checkedFilter, setCheckedFilter] = React.useState(false)
-  const handleChangeCheckedFilter = nextChecked => {
-    setCheckedFilter(nextChecked)
-  }
-
-  function handleChangeMovieName (e) {
-    setMovieName(e.target.value)
-  }
-
+export default function SearchForm ({
+  searchQuery,
+  handleChangeSearchQuery,
+  checkedFilter,
+  handleChangeCheckedFilter,
+  onSubmit
+}) {
   function handleSubmit (e) {
     e.preventDefault()
+    onSubmit()
   }
+
   return (
     <section className='searchForm'>
       <h2 hidden={true}>Форма поиска фильмов</h2>
@@ -35,8 +32,8 @@ export default function SearchForm () {
             className='searchForm__input'
             placeholder=' '
             autoComplete='off'
-            value={movieName}
-            onChange={handleChangeMovieName}
+            value={searchQuery}
+            onChange={handleChangeSearchQuery}
             required
           />
           <button

@@ -9,11 +9,10 @@ import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Preloader from '../Preloader/Preloader'
 import React from 'react'
-import CurrentUserContext from '../../contexts/CurrentUserContext'
+import GlobalContext from '../../contexts/GlobalContext'
 
 export default function Main () {
-  const { currentUser, isLoading, isLogged } =
-    React.useContext(CurrentUserContext)
+  const { isLoading, isLogged } = React.useContext(GlobalContext)
   return (
     <>
       <Header isLogged={isLogged} mainPage={true} />

@@ -2,16 +2,16 @@ import './App.css'
 import React from 'react'
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import Main from '../Main/Main'
-import CurrentUserContext from '../../contexts/CurrentUserContext.js'
+import GlobalContext from '../../contexts/GlobalContext.js'
 import Movies from '../Movies/Movies.jsx'
 import SavedMovies from '../SavedMovies/SavedMovies.jsx'
 import NotFound from '../NotFound/NotDound.jsx'
 import Profile from '../Profile/Profile.jsx'
 import Login from '../Login/Login.jsx'
 import Register from '../Register/Register.jsx'
-import movieApi from '../../utils/MoviesApi.js'
 import authApi from '../../utils/Auth.js'
 import mainApi from '../../utils/MainApi.js'
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx'
 
 export default function App () {
   const [currentUser, setCurrentUser] = React.useState({
@@ -20,8 +20,8 @@ export default function App () {
   })
   const [isLogged, setIsLogged] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
-  const [movies, setMovies] = React.useState([])
   const [apiMessage, setApiMessage] = React.useState('')
+  const [savedMovies, setSavedMovies] = React.useState([])
 
   const navigate = useNavigate()
 
@@ -30,9 +30,10 @@ export default function App () {
       .getInfo(token)
       .then(res => {
         setIsLogged(true)
+        localStorage.setItem('Logged', true)
       })
       .catch(() => {
-        navigate('/')
+        localStorage.setItem('Logged', JSON.stringify(false))
       })
   }
 
@@ -44,14 +45,13 @@ export default function App () {
         setApiMessage('')
         setIsLogged(true)
         localStorage.setItem('jwt', res.token)
+        localStorage.setItem('Logged', true)
         navigate('/movies')
       })
       .catch(err => {
-        {
-          err.message === 'Validation failed'
-            ? setApiMessage('При регистрации пользователя произошла ошибка')
-            : setApiMessage(err.message)
-        }
+        err.message === 'Validation failed'
+          ? setApiMessage('При регистрации пользователя произошла ошибка')
+          : setApiMessage(err.message)
       })
       .finally(() => {
         setIsLoading(false)
@@ -66,14 +66,21 @@ export default function App () {
         setApiMessage('')
         setIsLogged(true)
         localStorage.setItem('jwt', res.token)
+        localStorage.setItem('Logged', true)
         navigate('/movies')
+        mainApi
+          .getSavedMovies()
+          .then(res => {
+            setSavedMovies(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
       .catch(err => {
-        {
-          err.message === 'Validation failed'
-            ? setApiMessage('Неправильные почта или пароль')
-            : setApiMessage(err.message)
-        }
+        err.message === 'Validation failed'
+          ? setApiMessage('Неправильные почта или пароль')
+          : setApiMessage(err.message)
       })
       .finally(() => {
         setIsLoading(false)
@@ -88,6 +95,7 @@ export default function App () {
       email: ''
     })
     setApiMessage('')
+    setSavedMovies([])
   }
 
   function getUserInfo () {
@@ -102,11 +110,9 @@ export default function App () {
         })
       })
       .catch(err => {
-        {
-          err.message === 'Validation failed'
-            ? setApiMessage('Неправильные почта или имя')
-            : setApiMessage(err.message)
-        }
+        err.message === 'Validation failed'
+          ? setApiMessage('Неправильные почта или имя')
+          : setApiMessage(err.message)
       })
       .finally(() => {
         setIsLoading(false)
@@ -117,7 +123,7 @@ export default function App () {
     setIsLoading(true)
     mainApi.setAuthorizationHeader(localStorage.getItem('jwt'))
     return mainApi
-      .changeUserInfo({emailUser, nameUser})
+      .changeUserInfo({ emailUser, nameUser })
       .then(res => {
         setCurrentUser({
           name: res.name,
@@ -126,7 +132,6 @@ export default function App () {
         setApiMessage('')
       })
       .catch(err => {
-        console.log(err)
         setApiMessage(err.message)
       })
       .finally(() => {
@@ -134,55 +139,113 @@ export default function App () {
       })
   }
 
+  function handleSaveMovie (movie) {
+    setIsLoading(true)
+    mainApi
+      .saveNewMovie(movie)
+      .then(newCard => {
+        setSavedMovies([newCard, ...savedMovies])
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function handleDeleteMovie (movie) {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        const newMoviesList = savedMovies.filter(m =>
+          m._id === movie._id ? false : true
+        )
+        setSavedMovies(newMoviesList)
+      })
+      .catch(err => console.log(err))
+  }
+
   React.useEffect(() => {
     if (localStorage.getItem('jwt')) {
       const token = localStorage.getItem('jwt')
       auth(token)
+      mainApi
+        .getSavedMovies()
+        .then(res => {
+          setSavedMovies(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(() => {})
     }
   }, [])
 
-  React.useEffect(() => {
-    Promise.all([movieApi.getAllMovies()])
-      .then(([list]) => {
-        setMovies(list)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, [])
-
   return (
-    <CurrentUserContext.Provider
+    <GlobalContext.Provider
       value={{
         currentUser,
         isLoading,
         isLogged,
-        movies,
         apiMessage,
-        setApiMessage
+        savedMovies,
+        setApiMessage,
+        setIsLoading,
+        handleSaveMovie,
+        handleDeleteMovie
       }}
     >
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
+        <Route
+          path='/movies'
+          element={
+            <ProtectedRoute>
+              <Movies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/saved-movies'
+          element={
+            <ProtectedRoute path='/saved-movies'>
+              <SavedMovies movies={savedMovies} />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/profile'
           element={
-            <Profile
-              onSignOut={onSignOut}
-              withOpen={getUserInfo}
-              onUpdateUserInfo={handleUpdateUserInfo}
-            />
+            <ProtectedRoute>
+              <Profile
+                onSignOut={onSignOut}
+                withOpen={getUserInfo}
+                onUpdateUserInfo={handleUpdateUserInfo}
+              />
+            </ProtectedRoute>
           }
         />
-        <Route path='/signin' element={<Login onLogin={handleLogin} />} />
+        <Route
+          path='/signin'
+          element={
+            isLogged ? (
+              <Navigate to='/' replace />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
+        />
         <Route
           path='/signup'
-          element={<Register onRegister={handleRegister} />}
+          element={
+            isLogged ? (
+              <Navigate to='/' replace />
+            ) : (
+              <Register onRegister={handleRegister} />
+            )
+          }
         />
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </CurrentUserContext.Provider>
+    </GlobalContext.Provider>
   )
 }

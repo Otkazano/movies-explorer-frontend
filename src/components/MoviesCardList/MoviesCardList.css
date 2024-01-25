@@ -1,7 +1,7 @@
 .cardList {
   padding: 70px 70px 84px;
   margin: 0;
-  min-height: calc(100dvh - 613px);
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
