@@ -47,6 +47,7 @@ export default function App () {
         localStorage.setItem('jwt', res.token)
         localStorage.setItem('Logged', true)
         navigate('/movies')
+        getUserInfo()
       })
       .catch(err => {
         err.message === 'Validation failed'
@@ -68,6 +69,7 @@ export default function App () {
         localStorage.setItem('jwt', res.token)
         localStorage.setItem('Logged', true)
         navigate('/movies')
+        getUserInfo()
         mainApi
           .getSavedMovies()
           .then(res => {
@@ -172,6 +174,7 @@ export default function App () {
         .getSavedMovies()
         .then(res => {
           setSavedMovies(res)
+          getUserInfo()
         })
         .catch(err => {
           console.log(err)
@@ -218,7 +221,6 @@ export default function App () {
             <ProtectedRoute>
               <Profile
                 onSignOut={onSignOut}
-                withOpen={getUserInfo}
                 onUpdateUserInfo={handleUpdateUserInfo}
               />
             </ProtectedRoute>

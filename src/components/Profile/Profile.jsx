@@ -2,20 +2,17 @@ import './Profile.css'
 import GlobalContext from '../../contexts/GlobalContext.js'
 import React from 'react'
 import Header from '../Header/Header.jsx'
-import AuthInput from '../AuthInput/AuthInput.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation.js'
 import Preloader from '../Preloader/Preloader.jsx'
 
-export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
+export default function Profile ({ onSignOut, onUpdateUserInfo }) {
   const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
     React.useContext(GlobalContext)
 
   const { values, errors, isValid, handleChange, setValues, setIsValid } =
     useFormWithValidation()
 
-  const [userName, setUserName] = React.useState(currentUser.name)
-  const [userEmail, setUserEmail] = React.useState(currentUser.email)
   const [editInfo, setEditInfo] = React.useState(false)
   const navigate = useNavigate()
 
@@ -41,7 +38,7 @@ export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
   }
 
   React.useEffect(() => {
-    withOpen()
+    // withOpen()
     setApiMessage('')
   }, [])
 
