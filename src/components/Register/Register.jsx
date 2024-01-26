@@ -8,13 +8,15 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import Preloader from '../Preloader/Preloader'
 
 export default function Register ({ onRegister }) {
-  const { currentUser, isLoading, isLogged, apiMessage, setApiMessage } =
+  const { isLoading, apiMessage, setApiMessage } =
     React.useContext(GlobalContext)
 
-  const { values, errors, isValid, handleChange } = useFormWithValidation()
+  const { values, errors, isValid, handleChange, setIsValid } =
+    useFormWithValidation()
 
   function handleSubmit (e) {
     e.preventDefault()
+    setIsValid(false)
     onRegister({
       name: values.registerInputName,
       email: values.registerInputEmail,
