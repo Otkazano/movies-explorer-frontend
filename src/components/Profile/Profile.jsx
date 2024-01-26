@@ -21,6 +21,7 @@ export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
 
   function editInfoHandler (e) {
     e.preventDefault()
+    setApiMessage('')
     setEditInfo(true)
   }
 
@@ -127,7 +128,15 @@ export default function Profile ({ onSignOut, withOpen, onUpdateUserInfo }) {
             </label>
 
             <div className='profile__boxBtnSave'>
-              <span className='profile__apiMessage'>{apiMessage}</span>
+              <span
+                className={`profile__apiMessage ${
+                  apiMessage === 'Вы успешно изменили данные аккаунта!'
+                    ? 'profile__apiMessage_green'
+                    : ''
+                } `}
+              >
+                {apiMessage}
+              </span>
               <button
                 className={`profile__btn-save ${
                   isValid ? 'buttons-hover-style' : 'profile__btn-save-disabled'

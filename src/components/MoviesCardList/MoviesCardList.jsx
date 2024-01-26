@@ -6,7 +6,7 @@ import GlobalContext from '../../contexts/GlobalContext'
 
 export default function MoviesCardList ({ moviesSavedPage, movies, errorText }) {
   const { savedMovies } = React.useContext(GlobalContext)
-  const { width, isScreen845, isScreen989 } = useResize()
+  const { width, isScreen845, isScreen989, isScreen767 } = useResize()
   const [isMount, setIsMount] = React.useState(true)
 
   const [showList, setShowList] = React.useState([])
@@ -94,7 +94,7 @@ export default function MoviesCardList ({ moviesSavedPage, movies, errorText }) 
           className={`cardList__items ${
             (showList.length === 3 && showList.length && isScreen989) ||
             (showList.length === 2 && showList.length && isScreen845) ||
-            (showList.length === 1 && showList.length)
+            (showList.length === 1 && showList.length && !isScreen767)
               ? 'cardList__items_left'
               : ''
           }`}

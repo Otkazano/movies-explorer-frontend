@@ -16,6 +16,7 @@ export const useResize = () => {
   return {
     width,
     isScreen845: width >= 845,
-    isScreen989: width >= 989
+    isScreen989: width >= 989,
+    isScreen767: width <= 767
   }
 }

@@ -129,7 +129,7 @@ export default function App () {
           name: res.name,
           email: res.email
         })
-        setApiMessage('')
+        setApiMessage('Вы успешно изменили данные аккаунта!')
       })
       .catch(err => {
         setApiMessage(err.message)
