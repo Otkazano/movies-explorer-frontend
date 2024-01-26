@@ -16,6 +16,8 @@ export default function SavedMovies ({ movies }) {
 
   const [showList, setShowList] = React.useState([])
 
+  const shortFilmDuration = 40
+
   function handleChangeCheckedFilter (e) {
     setCheckedFilterShortFilms(e)
   }
@@ -24,7 +26,7 @@ export default function SavedMovies ({ movies }) {
   }
 
   function filterShortMovies (movies) {
-    return movies.filter(movie => movie.duration < 40)
+    return movies.filter(movie => movie.duration < shortFilmDuration)
   }
 
   function filterMovies (arrMovies, searchQuery, shortFilms) {

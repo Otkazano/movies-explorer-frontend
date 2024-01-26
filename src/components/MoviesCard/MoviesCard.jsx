@@ -9,9 +9,10 @@ export default function MoviesCard ({ item, moviesSavedPage, isLiked }) {
     ? `https://api.nomoreparties.co${item.image.url}`
     : item.image
 
+  const oneHour = 60
   function durationInHours (mins) {
-    const hours = Math.trunc(mins / 60)
-    const minutes = mins % 60
+    const hours = Math.trunc(mins / oneHour)
+    const minutes = mins % oneHour
     return `${hours}ч ${minutes}м`
   }
 

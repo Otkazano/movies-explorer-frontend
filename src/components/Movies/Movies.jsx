@@ -26,6 +26,8 @@ export default function Movies () {
     'Сделайте свой первый поиск!'
   )
 
+  const shortFilmDuration = 40
+
   function handleSetMovies (movies) {
     if (movies.length === 0) {
       setErrorText('Ничего не найдено')
@@ -48,7 +50,7 @@ export default function Movies () {
   }
 
   function filterShortMovies (movies) {
-    return movies.filter(movie => movie.duration < 40)
+    return movies.filter(movie => movie.duration < shortFilmDuration)
   }
 
   function filterMovies (arrMovies, searchQuery, shortFilms) {
