@@ -11,12 +11,10 @@ export default function Register ({ onRegister }) {
   const { isLoading, apiMessage, setApiMessage } =
     React.useContext(GlobalContext)
 
-  const { values, errors, isValid, handleChange, setIsValid } =
-    useFormWithValidation()
+  const { values, errors, isValid, handleChange } = useFormWithValidation()
 
   function handleSubmit (e) {
     e.preventDefault()
-    setIsValid(false)
     onRegister({
       name: values.registerInputName,
       email: values.registerInputEmail,

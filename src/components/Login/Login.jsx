@@ -11,12 +11,10 @@ export default function Login ({ onLogin }) {
   const { isLoading, apiMessage, setApiMessage } =
     React.useContext(GlobalContext)
 
-  const { values, errors, isValid, handleChange, setIsValid } =
-    useFormWithValidation()
+  const { values, errors, isValid, handleChange } = useFormWithValidation()
 
   function handleSubmit (e) {
     e.preventDefault()
-    setIsValid(false)
     onLogin({
       email: values.loginInputEmail,
       password: values.loginInputPassword

@@ -28,7 +28,7 @@ export default function App () {
   function auth (token) {
     authApi
       .getInfo(token)
-      .then(res => {
+      .then(() => {
         setIsLogged(true)
         localStorage.setItem('Logged', true)
       })
@@ -155,6 +155,7 @@ export default function App () {
   }
 
   function handleDeleteMovie (movie) {
+    setIsLoading(true)
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
@@ -164,6 +165,9 @@ export default function App () {
         setSavedMovies(newMoviesList)
       })
       .catch(err => console.log(err))
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   React.useEffect(() => {
@@ -182,6 +186,25 @@ export default function App () {
         .finally(() => {})
     }
   }, [])
+
+  function blockDoubleRequest (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault()
+    }
+    if (e.keyCode == 32) {
+      e.preventDefault()
+    }
+  }
+
+  React.useEffect(() => {
+    if (isLoading) {
+      window.addEventListener('keydown', blockDoubleRequest)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', blockDoubleRequest)
+    }
+  }, [isLoading])
 
   return (
     <GlobalContext.Provider

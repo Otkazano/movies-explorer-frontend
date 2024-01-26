@@ -38,7 +38,6 @@ export default function Profile ({ onSignOut, onUpdateUserInfo }) {
   }
 
   React.useEffect(() => {
-    // withOpen()
     setApiMessage('')
   }, [])
 
