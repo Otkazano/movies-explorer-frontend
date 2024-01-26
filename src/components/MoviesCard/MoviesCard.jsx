@@ -16,7 +16,6 @@ export default function MoviesCard ({ item, moviesSavedPage, isLiked }) {
   }
 
   function handleLikeClick () {
-    !liked ? setLiked(true) : setLiked(false)
     !liked ? handleSaveMovie(item) : handleDeleteMovie(item)
   }
 
