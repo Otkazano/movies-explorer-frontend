@@ -54,6 +54,10 @@
   text-decoration: none;
 }
 
+.login__link-logo {
+  width: fit-content;
+}
+
 @media (max-width: 845px) {
   .login {
     padding: 232px 0 288px;
@@ -84,5 +88,3 @@
     margin: 0 0 0 6px;
   }
 }
-
-
