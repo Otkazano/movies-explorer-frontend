@@ -30,7 +30,7 @@ export default function SearchForm ({
             type='text'
             id='inputMovie'
             className='searchForm__input'
-            placeholder=' '
+            placeholder='Фильмы'
             autoComplete='off'
             value={searchQuery}
             onChange={handleChangeSearchQuery}
